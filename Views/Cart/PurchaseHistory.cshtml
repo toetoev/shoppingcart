@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewData["Title"] = "My Purchases";
+
+    var products = (List<ProductList>)ViewData["PurchaseHistory"];
+
+}
+
+    <div class="row mt-5">
+       @foreach (var product in products)
+        {
+             <div class="card ml-5 mb-5" style="width:300px">
+                <img class="card-img-top" src="~/@product.Image" alt="Card image" style="width:100%">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        @product.Name
+                        <span class="float-right">$@product.Price</span>
+                    </h5>
+                <label><b>Purchase Data: </b>@product.PurchaseDate</label><br />
+                <label><b>Quantity: </b>@product.Quantity</label><br />
+                <label><b>Activate Code:</b></label>
+
+                <select class="form-control" id="@product.OrderId-@product.ProductId">
+                    @foreach (var code in @product.ActivationCode)
+                    {
+                        <option>@code</option>
+                    }
+                </select>
+                <br>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-primary float-right">Download</button>
+                </div>
+
+            </div>
+        }
+    </div>
+    

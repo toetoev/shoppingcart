@@ -1,0 +1,86 @@
+﻿@{ 
+    string name = (string)
+      ViewData["session"];
+    string key = (string)ViewData["Searchkeyword"];
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="~/images/logo.jpg" sizes="16x16">
+    <title>@ViewData["Title"] - CBG</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+        <div class="container">
+            @if (@name != null)
+            {
+                <h5 class="text-white pt-2 ml-4 mr-2">Hello, @name</h5>
+            }
+            else
+            {
+                <h5 class="text-white pt-2 ml-4 mr-2">Welcome, User</h5>
+            }
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item m-2 pt-2">
+                        <a class="nav-link text-white" href="@Url.Action("Index", "Home")"><span><i class="fa fa-bars pr-2" aria-hidden="true"></i></span>Gallery</a>
+                    </li>
+                    @if (ViewBag.Auth == "true")
+                    {
+                        <li class="nav-item m-2 pt-2">
+                            <a class="nav-link text-white" href='@Url.Action("PurchaseHistory","Cart")'><span><i class="fa fa-shopping-basket pr-2" aria-hidden="true"></i></span>My Purchases</a>
+                        </li>
+
+                        <li class="nav-item m-2 pt-2">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Logout"><span><i class="fa fa-sign-out pr-2" aria-hidden="true"></i></span>Logout</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item m-2 pt-2">
+                            <a class="nav-link text-white" href='@Url.Action("Login", "Home")'><span><i class="fa fa-sign-in pr-2" aria-hidden="true"></i></span>Login</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <form class="form-inline my-2 my-lg-0 m-2" action="/Home/Search">
+                        <input class="form-control mr-sm-2 text-muted" type="search" value="@key" aria-label="Search" name="keyword">
+                        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                    <li class="nav-item m-2">
+                        <a class="nav-link text-white" asp-area="" asp-controller="Cart" asp-action="Index" id="cartresize">
+                            <div style="display: inline-block; position:relative; width: 38px;">
+                                <img src="~/images/shoppingcart.png" id="cartimg" width="33" style="border-radius: 15%; margin-top: -20px; position: absolute; background-color:white;">
+                            </div>
+                            <button type="button" class="btn btn-outline-light">
+                                Cart <span class="badge badge-light" id="checkouttext"></span>
+                            </button>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        @RenderBody()
+    </div>
+
+    <footer class="border-top footer bg-dark">
+        <div class="container text-white">
+            &copy; 2020 - Shopping Cart by <span class="text-warning">Team 2A[SA-50]</span>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

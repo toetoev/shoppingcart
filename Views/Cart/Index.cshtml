@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "Index";
+
+    string name = (string)
+      ViewData["session"];
+}
+<form method="post" action="/Cart/PurchaseItem" id="orderform">
+    <div class="card shopping-cart mt-5">
+        <div class="card-header text-dark">
+            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            Shopping Cart
+        </div>
+        <div class="card-body">
+            <table class="table table-hover" id="OrderForm">
+                <thead>
+                    <tr>
+                        <th scope="col">No.</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Price($)</th>
+                        <th scope="col" width="17%">Quantity</th>
+                        <th scope="col">Subtotal($)</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="productlist">
+                    <tr>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="pull-right" style="margin: 5px">
+                <b>Total Amount: </b>
+                <span id="table_total"></span>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="Home/Index" class="btn btn-outline-secondary">
+                Continue Shopping
+            </a>
+
+            @if (name == null)
+            {
+                <div class="pull-right">
+                    <input type="submit" class="btn btn-success pull-right" value="Checkout" />
+                </div>
+            }
+            else
+            {
+                <!-- Button trigger modal -->
+                <div class="pull-right">
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">
+                        CheckOut
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</form>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Make Payment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <script src=”https://www.paypalobjects.com/api/checkout.js”></script>
+                <script src="https://www.paypal.com/sdk/js?client-id=AReUSn1IC5JnyC08qrlbJqQOAEVUI8mbvGb64n9f8AGCkZySxOu31RWVnEtpGz-2a86NLaqpvqrpGJKY"></script><!-- plz change your own client ID  -->
+
+                <div id="paypal-button-container"></div>
+            </div>
+        </div>
+    </div>
+</div>

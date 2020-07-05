@@ -1,0 +1,33 @@
+﻿@using ShoppingCart.Models;
+
+@{
+    ViewData["Title"] = "Home Page";
+
+    var products = (List<Product>)ViewData["ProductData"];
+    string name = (string)
+      ViewData["session"];
+}
+<div class="row mt-5">
+    @foreach (var product in products)
+    {
+        <div class="card ml-5 mb-5" style="width:330px">
+            <img class="card-img-top" src="~/@product.Image" alt="Card image" style="width:100%">
+            <div class="card-body">
+                <h5 class="card-title">
+                    @product.Name
+                    <span class="float-right">$@product.Price</span>
+                </h5>
+                <p class="card-text text-justify h-20">@product.Description</p>
+
+            </div>
+            <div class="card-footer">
+                <a class="btn btn-info" href=@("/Home/ProductDetails?productid="+@product.Id)>See more</a>
+                <button class="btn btn-primary float-right addtocart" data-id="@product.Id"
+                        data-name="@product.Name" data-description="@product.Description" data-price="@product.Price" data-image="@product.Image">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    }
+
+</div>

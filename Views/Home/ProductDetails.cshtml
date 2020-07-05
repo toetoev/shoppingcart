@@ -1,0 +1,74 @@
+﻿@using ShoppingCart.Models;
+@{
+    ViewData["Title"] = "Product Details";
+
+    var product = (Product)ViewData["ProductData"];
+    var reviews = (List<Review>)ViewData["GetReviews"];
+    string name = (string)
+    ViewData["session"];
+}
+
+
+    <div class="row">
+        <div class="col-lg-2">
+
+        </div>
+        <div class="col-lg-8">
+            <div class="card mt-4">
+                <img class="card-img-top img-fluid" src="~/@product.Image" alt="Card image" style="width:100%">
+                <div class="card-body">
+                    <h3 class="card-title">@product.Name</h3>
+                    <h4><strong>$</strong>@product.Price</h4>
+                    <p class="card-text">@product.Description</p>
+                </div>
+            </div>
+
+            <div class="card card-outline-secondary my-4">
+                <div class="card-header">
+                    Product Reviews
+                </div>
+
+                <div class="card-body">
+                    <div class="form-group">
+                        <input type="hidden" name="post_id" value="@product.Id" id="post_id">
+
+                        @if (reviews != null)
+                        {
+
+                            @foreach (var review in reviews)
+                            {
+                                <textarea class="form-control" rows="2" disabled>@review.Comment.ToString()</textarea>
+                                <span class="text-muted">Comment By - @review.Customer.Name</span>
+                                <span class="float-right text-muted">Given Date - @review.GivenDate.ToShortDateString()</span>
+                                <hr />
+                            }
+                        }
+
+                        @if (name == null)
+                        {
+                            <button type="submit" class="btn btn-light mt-3" disabled>Leave comment</button>
+                            <button class="btn btn-primary float-right mt-3 addtocart" data-id="@product.Id"
+                                    data-name="@product.Name" data-description="@product.Description" data-price="@product.Price" data-image="@product.Image">
+                                Add to Cart
+                            </button>
+                        }
+                        else
+                        {
+                            <form action="/Home/SaveComments" method="post">
+                                <input type="hidden" value="@product.Id" name="productid" />
+                                <textarea class="form-control" rows="3" name="comment" id="comment"></textarea>
+
+                                <button type="submit" class="btn btn-success mt-3 retrievecomment" id="submit" data-id="@product.Id">Leave comment</button>
+                            </form>
+
+                            <button class="btn btn-primary float-right addtocart" style="margin-top:-40px;" data-id="@product.Id"
+                                    data-name="@product.Name" data-description="@product.Description" data-price="@product.Price" data-image="@product.Image">
+                                Add to Cart
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>            
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
